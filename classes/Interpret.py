@@ -364,11 +364,11 @@ class Interpret:
 			elif self.instructions[current][0].upper() == "CREATEFRAME":
 				self.run.TF = [] 	#creates empty TF 
 			elif self.instructions[current][0].upper() == "PUSHFRAME":
-				self.run.pushFrame()
+				self.run.pushframe()
 			elif self.instructions[current][0].upper() == "POPFRAME":
-				self.run.popFrame()
+				self.run.popframe()
 			elif self.instructions[current][0].upper() == "DEFVAR":
-				self.run.defVar(self.instructions[current][1][0][1].split('@',1), current)
+				self.run.defvar(self.instructions[current][1][0][1].split('@',1), current)
 			elif self.instructions[current][0].upper() == "CALL":
 				current = self.goToLabel(self.instructions[current][1][0][1], current)
 				self.instrCount += 1	# 'execution' of label
@@ -378,27 +378,27 @@ class Interpret:
 				else:	#changes to position where it was called
 					current = self.calls.pop(-1)	
 			elif self.instructions[current][0].upper() == "PUSHS":
-				self.run.pushs(self.instructions[current][1][0])
+				self.run.push(self.instructions[current][1][0])
 			elif self.instructions[current][0].upper() == "POPS":
-				self.run.pops(self.instructions[current][1][0][1].split('@',1))
+				self.run.pop(self.instructions[current][1][0][1].split('@',1))
 			elif self.instructions[current][0].upper() == "ADD":
-				self.run.calculate("ADD",self.instructions[current][1][0][1].split('@',1),
+				self.run.calculator("ADD",self.instructions[current][1][0][1].split('@',1),
 										self.instructions[current][1][1],
 										self.instructions[current][1][2])
 			elif self.instructions[current][0].upper() == "SUB":
-				self.run.calculate("SUB",self.instructions[current][1][0][1].split('@',1),
+				self.run.calculator("SUB",self.instructions[current][1][0][1].split('@',1),
 										self.instructions[current][1][1],
 										self.instructions[current][1][2])
 			elif self.instructions[current][0].upper() == "MUL":
-				self.run.calculate("MUL",self.instructions[current][1][0][1].split('@',1),
+				self.run.calculator("MUL",self.instructions[current][1][0][1].split('@',1),
 										self.instructions[current][1][1],
 										self.instructions[current][1][2])
 			elif self.instructions[current][0].upper() == "IDIV":
-				self.run.calculate("IDIV",self.instructions[current][1][0][1].split('@',1),
+				self.run.calculator("IDIV",self.instructions[current][1][0][1].split('@',1),
 										self.instructions[current][1][1],
 										self.instructions[current][1][2])
 			elif self.instructions[current][0].upper() == "DIV":
-				self.run.calculate("DIV",self.instructions[current][1][0][1].split('@',1),
+				self.run.calculator("DIV",self.instructions[current][1][0][1].split('@',1),
 										self.instructions[current][1][1],
 										self.instructions[current][1][2])
 			elif self.instructions[current][0].upper() == "LT":
@@ -414,15 +414,15 @@ class Interpret:
 										self.instructions[current][1][1],
 										self.instructions[current][1][2])
 			elif self.instructions[current][0].upper() == "AND":
-				self.run.logical("AND",self.instructions[current][1][0][1].split('@',1),
+				self.run.logicOperation("AND",self.instructions[current][1][0][1].split('@',1),
 										self.instructions[current][1][1],
 										self.instructions[current][1][2])
 			elif self.instructions[current][0].upper() == "OR":
-				self.run.logical("OR",self.instructions[current][1][0][1].split('@',1),
+				self.run.logicOperation("OR",self.instructions[current][1][0][1].split('@',1),
 										self.instructions[current][1][1],
 										self.instructions[current][1][2])
 			elif self.instructions[current][0].upper() == "NOT":
-				self.run.logical("NOT",self.instructions[current][1][0][1].split('@',1),
+				self.run.logicOperation("NOT",self.instructions[current][1][0][1].split('@',1),
 										self.instructions[current][1][1])
 			elif self.instructions[current][0].upper() == "INT2CHAR":
 				self.run.int2Char(self.instructions[current][1][0][1].split('@',1),
@@ -466,20 +466,20 @@ class Interpret:
 				current = self.goToLabel(self.instructions[current][1][0][1], -1)
 				self.instrCount += 1	#the 'execution' of label
 			elif self.instructions[current][0].upper() == "JUMPIFEQ":
-				retBool = self.run.condJumps("JUMPIFEQ", self.instructions[current][1][1],
+				retBool = self.run.jumpsConditions("JUMPIFEQ", self.instructions[current][1][1],
 								self.instructions[current][1][2])
 				if retBool == True:	#jumps to label
 					current = self.goToLabel(self.instructions[current][1][0][1], -1)
 					self.instrCount += 1
 			elif self.instructions[current][0].upper() == "JUMPIFNEQ":
-				retBool = self.run.condJumps("JUMPIFNEQ", self.instructions[current][1][1],
+				retBool = self.run.jumpsConditions("JUMPIFNEQ", self.instructions[current][1][1],
 								self.instructions[current][1][2])
 				if retBool == True:	#jumps to label
 					current = self.goToLabel(self.instructions[current][1][0][1], -1)
 					self.instrCount += 1
 			elif self.instructions[current][0].upper() == "EXIT":
 				exitVal = self.run.instrExit(self.instructions[current][1][0])
-				self.initVars = self.run.initializedVars	#to save stats
+				self.initVars = self.run.numberOfVars	#to save stats
 				return exitVal
 			elif self.instructions[current][0].upper() == "DPRINT":
 				self.run.dprint(self.instructions[current][1][0])
@@ -503,15 +503,15 @@ Currently in Local Frame:	{5}
 			elif self.instructions[current][0].upper() == "CLEARS":
 				self.run.dataStack = []	#clears dataStack
 			elif self.instructions[current][0].upper() == "ADDS":
-				self.run.calculate("ADDS",None,None,None,True)
+				self.run.calculator("ADDS",None,None,None,True)
 			elif self.instructions[current][0].upper() == "SUBS":
-				self.run.calculate("SUBS",None,None,None,True)
+				self.run.calculator("SUBS",None,None,None,True)
 			elif self.instructions[current][0].upper() == "MULS":
-				self.run.calculate("MULS",None,None,None,True)
+				self.run.calculator("MULS",None,None,None,True)
 			elif self.instructions[current][0].upper() == "DIVS":
-				self.run.calculate("DIVS",None,None,None,True)
+				self.run.calculator("DIVS",None,None,None,True)
 			elif self.instructions[current][0].upper() == "IDIVS":
-				self.run.calculate("IDIVS",None,None,None,True)
+				self.run.calculator("IDIVS",None,None,None,True)
 			elif self.instructions[current][0].upper() == "LTS":
 				self.run.conditions("LT",None,None,None,True)
 			elif self.instructions[current][0].upper() == "GTS":
@@ -519,11 +519,11 @@ Currently in Local Frame:	{5}
 			elif self.instructions[current][0].upper() == "EQS":
 				self.run.conditions("EQ",None,None,None,True)
 			elif self.instructions[current][0].upper() == "ANDS":
-				self.run.logical("AND",None,None,None,True)
+				self.run.logicOperation("AND",None,None,None,True)
 			elif self.instructions[current][0].upper() == "ORS":
-				self.run.logical("OR",None,None,None,True)
+				self.run.logicOperation("OR",None,None,None,True)
 			elif self.instructions[current][0].upper() == "NOTS":
-				self.run.logical("NOT",None,None,None,True)
+				self.run.logicOperation("NOT",None,None,None,True)
 			elif self.instructions[current][0].upper() == "INT2CHARS":
 				self.run.int2Char(None, None, True)
 			elif self.instructions[current][0].upper() == "STRI2INTS":
@@ -533,17 +533,17 @@ Currently in Local Frame:	{5}
 			elif self.instructions[current][0].upper() == "FLOAT2INTS":
 				self.run.float2Int(None, None, True)
 			elif self.instructions[current][0].upper() == "JUMPIFEQS":
-				retBool = self.run.condJumps("JUMPIFEQ", None, None, True)
+				retBool = self.run.jumpsConditions("JUMPIFEQ", None, None, True)
 				if retBool == True:
 					current = self.goToLabel(self.instructions[current][1][0][1], -1)
 					self.instrCount += 1
 			elif self.instructions[current][0].upper() == "JUMPIFNEQS":
-				retBool = self.run.condJumps("JUMPIFNEQ", None, None, True)
+				retBool = self.run.jumpsConditions("JUMPIFNEQ", None, None, True)
 				if retBool == True:
 					current = self.goToLabel(self.instructions[current][1][0][1], -1)
 					self.instrCount += 1
 			current += 1
-		self.initVars = self.run.initializedVars
+		self.initVars = self.run.numberOfVars
 		return True
 		
 '''
