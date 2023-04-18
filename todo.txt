@@ -1,7 +1,0 @@
-test na merlinovy
-dokumentacia
-
-php test.php --int-script=interpret.py --int-only --directory=tests/interpret-only --recursive > out.html
-
-testy vsetky
-odovzdanie

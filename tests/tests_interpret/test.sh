@@ -8,13 +8,13 @@ PASSED=0
 FAILED=0
 
 if [[ -z "$INTERPRET" ]] ; then
-  INTERPRET=../../interpret.py
+  INTERPRET=../../../interpret.py
 fi
 
 for x in $(find "$PWD" -name '*.src')
 do
   #spuštění interptetu
-  x=$(echo $x | sed 's/\/c\/Users\/42191\/Desktop\/ipp2\///')
+  #x=$(echo $x | sed 's/\/c\/Users\/42191\/Desktop\/ipp2\///')
   timeout 2 python -O "$INTERPRET" --source="$x" --input="${x%.src}.in" > "${x%.src}.my_out"
 
   #uložení návratové hodnoty

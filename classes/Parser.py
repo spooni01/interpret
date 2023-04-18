@@ -102,7 +102,7 @@ class Parser:
 			
 		if argNum != self.instructionCount:
 			err.ErrorHandler("Wrong number of argument", 32)
-		self.listofInstructions.append(instr)	#appends to listofInstructions a list with ['instruction', [its args]]
+		self.listofInstructions.append(instr)	
 
 	# Function wil sort order
 	def sortOrder(self):
