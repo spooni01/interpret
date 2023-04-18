@@ -1,5 +1,9 @@
 import sys
+
+#
 import classes.Interpret as ib
+#
+
 
 # Operations for instructions
 class Operations:

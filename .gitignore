@@ -1,9 +1,0 @@
-.*
-!.gitignore
-
-# Pack
-*.zip
-
-# Folders
-tmpdir/
-__pycache__/

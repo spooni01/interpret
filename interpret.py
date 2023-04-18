@@ -3,7 +3,7 @@ import xml.etree.ElementTree as elemTree
 import classes.ArgumentParser as ap
 import classes.Parser as xmlpar
 import classes.ErrorHandler as err
-import classes.Interpret as interpret
+import classes.Interpret as interpret 
 
 # Arguments
 par = ap.ArgumentParser(add_help=False)
@@ -15,7 +15,7 @@ try:
 	listOfNumbers, listofInstructions = parser.check()
 
 
-#######
+	#######
 	program = interpret.Interpret()
 	program.checkInstr(listOfNumbers, listofInstructions) 			#checks if the instruction has correct order
 	#runs the whole interpret, returns True, if everything fine or some value if instruction EXIT appears
