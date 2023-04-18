@@ -2,7 +2,6 @@ import sys
 
 # Class for writing errors on stderr and exiting program
 class ErrorHandler:
-    # Colors of stdout/stderr
     RED = "\033[1;31m"
     RESET = "\033[0m"
 
