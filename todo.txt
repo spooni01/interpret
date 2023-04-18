@@ -1,7 +1,7 @@
 test na merlinovy
-usporiadanie priecinkov
-var name change
 dokumentacia
-is it ok
 
 php test.php --int-script=interpret.py --int-only --directory=tests/interpret-only --recursive > out.html
+
+testy vsetky
+odovzdanie

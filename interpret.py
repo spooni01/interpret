@@ -1,12 +1,9 @@
+import sys
+import xml.etree.ElementTree as elemTree
 import classes.ArgumentParser as ap
 import classes.Parser as xmlpar
 import classes.ErrorHandler as err
-
-###
-import sys
-import ippcode_bank 
-import xml.etree.ElementTree as elemTree
-###
+import classes.Interpret as interpret
 
 # Arguments
 par = ap.ArgumentParser(add_help=False)
@@ -18,8 +15,8 @@ try:
 	listOfNumbers, listofInstructions = parser.check()
 
 
-	#######
-	program = ippcode_bank.Interpret()
+#######
+	program = interpret.Interpret()
 	program.checkInstr(listOfNumbers, listofInstructions) 			#checks if the instruction has correct order
 	#runs the whole interpret, returns True, if everything fine or some value if instruction EXIT appears
 	#this is for situation when we get STATI args but if we ended up earlier, the stats would not be printed
@@ -40,27 +37,27 @@ except TypeError as wrongxml:
 except FileNotFoundError:
 	sys.stderr.write("ERROR: Source file cannot be opened !\n")
 	sys.exit(11)
-except ippcode_bank.ParseError as wrongsyntax:
+except interpret.ParseError as wrongsyntax:
 	sys.stderr.write("ERROR: syntax error-> %s!\n" % str(wrongsyntax))
 	sys.exit(32)
-except ippcode_bank.SemanticsError as wrongsemantics:
+except interpret.SemanticsError as wrongsemantics:
 	sys.stderr.write("ERROR: semantics error-> %s!\n" % str(wrongsemantics))
 	sys.exit(52)
-except ippcode_bank.WrongArgTypes as wrongargs:
+except interpret.WrongArgTypes as wrongargs:
 	sys.stderr.write("ERROR: wrong operands type-> %s!\n" % str(wrongargs))
 	sys.exit(53)
-except ippcode_bank.UndefinedVar as wrongvar:
+except interpret.UndefinedVar as wrongvar:
 	sys.stderr.write("ERROR: variable error-> %s!\n" % str(wrongvar))
 	sys.exit(54)
-except ippcode_bank.FrameError as frameError:
+except interpret.FrameError as frameError:
 	sys.stderr.write("ERROR: %s !\n" % str(frameError))
 	sys.exit(55)
-except ippcode_bank.MissingValue as missingValue:
+except interpret.MissingValue as missingValue:
 	sys.stderr.write("ERROR: missing value-> %s!\n" % str(missingValue))
 	sys.exit(56)
-except ippcode_bank.WrongValue as wrongvalue:
+except interpret.WrongValue as wrongvalue:
 	sys.stderr.write("ERROR: wrong value-> %s!\n" % str(wrongvalue))
 	sys.exit(57)
-except ippcode_bank.StringError as wrongstring:
+except interpret.StringError as wrongstring:
 	sys.stderr.write("ERROR: error with string-> %s!\n" % str(wrongstring))
 	sys.exit(58)

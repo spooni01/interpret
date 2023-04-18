@@ -1,9 +1,5 @@
 import sys
-
-#
-import ippcode_bank as ib
-#
-
+import classes.Interpret as ib
 
 # Operations for instructions
 class Operations:
